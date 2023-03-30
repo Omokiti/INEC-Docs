@@ -1,4 +1,6 @@
 ---
+sidebar_position: 2
+
 slug: Glossary
 title: Glossary
 authors:
@@ -7,7 +9,7 @@ authors:
   url: https://github.com/Omokiti
   image_url: https://github.com/omokiti.png
 tags: [glossary, INEC]
-sidebar_position: 2
+
 ---
 
 Hey Welcome to the Glossary section of the docs. 

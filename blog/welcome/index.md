@@ -1,9 +1,11 @@
 ---
+sidebar_position: 1
+
 slug: welcome
 title: Welcome
 authors: [eomokiti]
 tags: [firstblog, election, docusaurus]
-sidebar_position: 1
+
 ---
 
 Hey 👋 welcome to my first documentation site using docasarus.

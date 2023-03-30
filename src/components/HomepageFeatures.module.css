@@ -1,0 +1,27 @@
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureSvg {
+  height: 200px;
+  width: 200px;
+}
+.card{
+  width:200px;
+  height:auto;
+  background:#f9f9f9;
+  border-radius:10px;
+  border:1px solid #efefef;
+  /* margin-bottom:30px; */
+  padding-left:10%;
+  padding-right:10%;
+  padding-top:10%;
+  color:black;
+  }
+  
+  .text{
+  text-align:center;
+  }

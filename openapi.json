@@ -1,0 +1,411 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "INEC irev API",
+    "license": {
+      "name": "INEC"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://irev-v2.herokuapp.com/api/v1"
+    }
+  ],
+  "paths": {
+    "/elections": {
+      "get": {
+        "summary": "Get details of Elections",
+        "operationId": "Get Elections",
+        "tags": ["elections"],
+        
+        "responses": {
+          "200": {
+            "description": "An array of election details",
+            
+            "content": {
+              "application/json": {
+               
+              }
+             
+            }
+          },
+          "401":{
+            "description":"Unauthorized"
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+     
+    },
+    "/election-types": {
+      "get":{
+        "summary":"Get Election Types",
+        "operationId":"Get Election Type",
+        "tags":["elections-type"],
+        "responses":{
+          "200": {
+            "description": "An array of election types",
+            "headers": {
+              "x-next": {
+                "description": "A link to the next page of responses",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Elections"
+                }
+              },
+              "application/xml":{
+                "schema":{
+                  "$ref":"#/components/schemas/Elections"
+                }
+              }
+            }
+          }
+        }
+      }
+     
+    },
+    "/elections/{election_id}/lga/state/{id}":
+     {
+      "get":{
+        "summary":"Get State by Id",
+        "operationId":"Get State by Id",
+        "tags":["state"],
+        "parameters": [
+          {
+            "name": "election_id",
+            "in": "path",
+            "required": true,
+            "description": "The id of a specific election ",
+            "schema": {
+              "type": "string"
+            },
+            "example":"63f8f25b594e164f8146a213"
+          },
+          {
+            "name":"id",
+            "in":"path",
+            "required":true,
+            "description":"The id ",
+            "schema":{
+              "type":"string"
+            },
+            "example":"1"
+          }
+        ],
+        "responses":{
+          "200": {
+            "description": "Get a specific state by id",
+            "headers": {
+              "x-next": {
+                "description": "A link to the next page of responses",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Elections"
+                }
+              },
+              "application/xml":{
+                "schema":{
+                  "$ref":"#/components/schemas/Elections"
+                }
+              }
+            }
+          }
+        }
+      }
+     
+    },
+    "/elections/{election_id}/result/stats":
+    {
+     "get":{
+       "summary":"Get Election Stats",
+       "operationId":"Get Election Stats",
+       "tags":["stats"],
+       "parameters": [
+         {
+           "name": "election_id",
+           "in": "path",
+           "required": true,
+           "description": "The id of a specific election ",
+           "schema": {
+             "type": "string"
+           },
+           "example":"63f8f25b594e164f8146a213"
+         }
+         
+       ],
+       "responses":{
+         "200": {
+           "description": "Get Election Stats",
+           
+           "content": {
+             "application/json": {
+               "schema": {
+                 "$ref": "#/components/schemas/Elections"
+               }
+             },
+             "application/xml":{
+               "schema":{
+                 "$ref":"#/components/schemas/Elections"
+               }
+             }
+           }
+         }
+       }
+     }
+    
+   },
+   "/elections/{election_id}/lga/{lga}":
+   {
+    "get":{
+      "summary":"Get Local Government Area by Id ",
+      "operationId":"Get Election Stats",
+      "tags":["Local Government Area"],
+      "parameters": [
+        {
+          "name": "election_id",
+          "in": "path",
+          "required": true,
+          "description": "The id of a specific election ",
+          "schema": {
+            "type": "string"
+          },
+          "example":"63f8f25b594e164f8146a213"
+        },
+        {
+          "name": "lga",
+          "in": "path",
+          "required": true,
+          "description": "The id of a local government area ",
+          "schema": {
+            "type": "string"
+          },
+          "example":"5f0f397a4d89fc3a883de0c0" 
+        }
+        
+      ],
+      "responses":{
+        "200": {
+          "description": "Get a specific local government area",
+          
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Elections"
+              }
+            },
+            "application/xml":{
+              "schema":{
+                "$ref":"#/components/schemas/Elections"
+              }
+            }
+          }
+        }
+      }
+    }
+   
+  },
+  "/elections/{election_id}/pus":
+  {
+   "get":{
+     "summary":"Get Polling units by ward Id ",
+     "operationId":"Get Polling units by ward Id",
+     "tags":["Polling Unit"],
+     "parameters": [
+       {
+         "name": "election_id",
+         "in": "path",
+         "required": true,
+         "description": "The id of a specific election ",
+         "schema": {
+           "type": "string"
+         },
+         "example":"63f8f25b594e164f8146a213"
+       },
+       {
+         "name": "ward",
+         "in": "query",
+         "required": true,
+         "description": "The id of a ward ",
+         "schema": {
+           "type": "string"
+         },
+         "example":"5f0f3a368f77bb3acad08d99" 
+       }
+       
+     ],
+     "responses":{
+       "200": {
+         "description": "Get a specific local government area",
+         
+         "content": {
+           "application/json": {
+             "schema": {
+               "$ref": "#/components/schemas/Elections"
+             }
+           },
+           "application/xml":{
+             "schema":{
+               "$ref":"#/components/schemas/Elections"
+             }
+           }
+         }
+       }
+     }
+   }
+  
+ },
+ "/elections/{election_id}/pu/{pu_id}":
+  {
+   "get":{
+     "summary":"Get Polling unit by Id ",
+     "operationId":"Get Polling unit by polling unit Id",
+     "tags":["Specific Polling Unit"],
+     "parameters": [
+       {
+         "name": "election_id",
+         "in": "path",
+         "required": true,
+         "description": "The id of a specific election ",
+         "schema": {
+           "type": "string"
+         },
+         "example":"63f8f25b594e164f8146a213"
+       },
+       {
+         "name": "pu_id",
+         "in": "path",
+         "required": true,
+         "description": "The id of a polling unit ",
+         "schema": {
+           "type": "string"
+         },
+         "example":"63f8f28b594e164f8146a393" 
+       }
+       
+     ],
+     "responses":{
+       "200": {
+         "description": "Get a specific Polling unit",
+         
+         "content": {
+           "application/json": {
+             
+           }
+          
+         }
+       }
+     }
+   }
+  
+ },
+
+ "/elections/{election_id}/pu/{pu_id}/accreditation":
+  {
+   "get":{
+     "summary":"Get Accreditation by Polling unit Id ",
+     "operationId":"Get Accreditation by polling unit Id",
+     "tags":["Accreditation"],
+     "parameters": [
+       {
+         "name": "election_id",
+         "in": "path",
+         "required": true,
+         "description": "The id of a specific election ",
+         "schema": {
+           "type": "string"
+         },
+         "example":"63f8f25b594e164f8146a213"
+       },
+       {
+         "name": "pu_id",
+         "in": "path",
+         "required": true,
+         "description": "The id of a polling unit ",
+         "schema": {
+           "type": "string"
+         },
+         "example":"63f8f28b594e164f8146a393" 
+       }
+       
+     ],
+     "responses":{
+       "200": {
+         "description": "Get a specific Polling unit",
+         
+         "content": {
+           "application/json": {
+            
+           }
+           
+         }
+       }
+     }
+   }
+  
+ }
+    
+  },
+  "components": {
+    "schemas": {
+      "Elections": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "status":{
+            "type":"string",
+            "example":"ACTIVE"
+          },
+          "version":{
+            "type":"integer",
+            "format":"int32",
+            "example":2
+          },
+          "election_lgas":{
+            "type":"array"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example":12
+          },
+          "name": {
+            "type": "string",
+            "example":"ema"
+          },
+          "tag": {
+            "type": "string"
+          }
+        }
+      },
+      "Pet": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Pet"
+        }
+      }
+      
+    }
+  }
+}

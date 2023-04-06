@@ -7,6 +7,7 @@
       "name": "INEC"
     }
   },
+  "optimizeConversion":true,
   "servers": [
     {
       "url": "https://irev-v2.herokuapp.com/api/v1"
@@ -18,31 +19,37 @@
         "summary": "Get details of Elections",
         "operationId": "Get Elections",
         "tags": ["elections"],
-        
+       
         "responses": {
-          "200": {
+         "200": {
             "description": "An array of election details",
-            
+           
             "content": {
               "application/json": {
-               
+              
+                "schema": {
+                 "$ref": "#/components/schemas/Elections"
+                }
               }
              
             }
           },
           "401":{
-            "description":"Unauthorized"
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            "description":"Unauthorized",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "type":"object"
+                },
+                "properties":{
+                  "message":{
+                    "type":"string"
+                  }
                 }
               }
             }
           }
+       
         }
       }
      
@@ -66,12 +73,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Elections"
+                  "$ref": "#/components/schemas/Election-type"
                 }
               },
               "application/xml":{
                 "schema":{
-                  "$ref":"#/components/schemas/Elections"
+                  "$ref":"#/components/schemas/Election-type"
                 }
               }
             }
@@ -122,12 +129,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Elections"
+                  "$ref": "#/components/schemas/Election-state"
                 }
               },
               "application/xml":{
                 "schema":{
-                  "$ref":"#/components/schemas/Elections"
+                  "$ref":"#/components/schemas/Election-state"
                 }
               }
             }
@@ -162,12 +169,12 @@
            "content": {
              "application/json": {
                "schema": {
-                 "$ref": "#/components/schemas/Elections"
+                 "$ref": "#/components/schemas/Election-stats"
                }
              },
              "application/xml":{
                "schema":{
-                 "$ref":"#/components/schemas/Elections"
+                 "$ref":"#/components/schemas/Election-stats"
                }
              }
            }
@@ -212,12 +219,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Elections"
+                "$ref": "#/components/schemas/Election-lga"
               }
             },
             "application/xml":{
               "schema":{
-                "$ref":"#/components/schemas/Elections"
+                "$ref":"#/components/schemas/Election-lga"
               }
             }
           }
@@ -262,12 +269,12 @@
          "content": {
            "application/json": {
              "schema": {
-               "$ref": "#/components/schemas/Elections"
+               "$ref": "#/components/schemas/Election-ward"
              }
            },
            "application/xml":{
              "schema":{
-               "$ref":"#/components/schemas/Elections"
+               "$ref":"#/components/schemas/Election-ward"
              }
            }
          }
@@ -311,7 +318,9 @@
          
          "content": {
            "application/json": {
-             
+            "schema": {
+              "$ref": "#/components/schemas/Election-polling"
+            }
            }
           
          }
@@ -356,7 +365,9 @@
          
          "content": {
            "application/json": {
-            
+            "schema": {
+              "$ref": "#/components/schemas/Election-accreditation"
+            }
            }
            
          }
@@ -371,7 +382,7 @@
     "schemas": {
       "Elections": {
         "type": "object",
-        "required": ["id", "name"],
+        "required":"[status,id,name,tag]",
         "properties": {
           "status":{
             "type":"string",
@@ -399,6 +410,549 @@
           }
         }
       },
+      "Election-type": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "status":{
+            "type":"string",
+            "example":"ACTIVE"
+          },
+          
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example":12
+          },
+          "name": {
+            "type": "string",
+            "example":"Presidential Election"
+          },
+          "code": {
+            "type": "string",
+            "example":"PRES"
+          },
+          "election_type_id":{
+            "type":"integer",
+            "format":"int64",
+            "example":1
+          },
+          "created_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "updated_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "__v":{
+            "type":"integer",
+            "format":"int64"
+          }
+        }
+      },
+      "Election-state": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "ward":{
+            "type":"array"
+          },
+          "status":{
+            "type":"string",
+            "example":"ACTIVE"
+          },
+          
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example":12
+          },
+          "state_id": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "state": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "lga_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":3102
+          },
+          "lga":{
+            "type":"string",
+            "example":""
+          },
+          "state_constituency":{
+            "type":"string"
+          },
+          "federal_constituency_id":{
+            "type":"string"
+          },
+          "federal_constituency":{
+            "type":"string"
+          },
+          "senatorial_district_id":{
+            "type":"integer",
+            "format": "int64",
+            "example":110
+          },
+          "senatorial_district":{
+            "type":"string"
+          },
+          "name": {
+            "type": "string",
+            "example":"EZIAMA"
+          },
+          "code": {
+            "type": "string",
+            "example":"01"
+          },
+          "old_name":{
+            "type":"string"
+          },
+          "ward_id":{
+            "type":"integer",
+            "format":"int64",
+            "example":1432
+          },
+
+          "created_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "updated_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "__v":{
+            "type":"integer",
+            "format":"int64"
+          }
+        }
+      },
+      "Election-stats": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "data":{
+            "type":"array"
+          },
+          "pus":{
+            "type": "integer",
+            "format": "int64",
+            "example":126846
+          },
+          
+          "documents": {
+            "type": "integer",
+            "format": "int64",
+            "example":127443
+          },
+          "latest": {
+            "type": "object"
+           
+          },
+          "status": {
+            "type": "string",
+            "example":"ACTIVE"
+          },
+          "_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":3102
+          },
+          "polling_unit_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":1029
+          },
+          "election_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":1029
+          },
+          "election":{
+            "type":"string"
+          },
+          "polling_unit":{
+            "type":"string"
+          },
+         
+          "name": {
+            "type": "string",
+            "example":"EZIAMA"
+          },
+          "code": {
+            "type": "string",
+            "example":"01"
+          },
+          "pu_code":{
+            "type":"string"
+          },
+          "ward_id":{
+            "type":"integer",
+            "format":"int64",
+            "example":1432
+          },
+          "lga_id":{
+            "type":"integer",
+            "format":"int64",
+            "example":1436
+          },
+          "lga":{
+            "type":"string"
+          },
+          "created_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "updated_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "__v":{
+            "type":"integer",
+            "format":"int64"
+          },
+          "document":{
+            "type":"object"
+          },
+          "external":{
+            "type":"boolean"
+          },
+          "statuss":{
+            "type":"integer",
+            "format":"int64",
+            "example":1436
+          },
+          "__id":{
+            "type": "integer",
+            "format": "int64",
+            "example":3102
+          },
+          "url":{
+            "type":"string"
+          },
+          "size":{
+            "type":"integer",
+            "format":"int64",
+            "example":31611
+          },
+          "updateds_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "document_id":{
+            "type":"integer",
+            "format":"int64",
+            "example":31611
+          },
+          "old_documents":{
+            "type":"array"
+          },
+          "session":{
+            "type":"integer",
+            "format":"int64",
+            "example":31611
+          }
+        }
+      },
+      "Election-lga": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "ward":{
+            "type":"array"
+          },
+          "status":{
+            "type":"string",
+            "example":"ACTIVE"
+          },
+          
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example":12
+          },
+          "state_id": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "state": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "lga_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":3102
+          },
+          "lga":{
+            "type":"string",
+            "example":""
+          },
+          "state_constituency_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":3102
+          },
+          "state_constituency":{
+            "type":"string"
+          },
+          "federal_constituency_id":{
+            "type":"string"
+          },
+          "federal_constituency":{
+            "type":"string"
+          },
+          "senatorial_district_id":{
+            "type":"integer",
+            "format": "int64",
+            "example":110
+          },
+          "senatorial_district":{
+            "type":"string"
+          },
+          "name": {
+            "type": "string",
+            "example":"EZIAMA"
+          },
+          "code": {
+            "type": "string",
+            "example":"01"
+          },
+          "old_name":{
+            "type":"string"
+          },
+          "ward_id":{
+            "type":"integer",
+            "format":"int64",
+            "example":1432
+          },
+
+          "created_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "updated_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "__v":{
+            "type":"integer",
+            "format":"int64"
+          }
+        }
+       },
+       "Election-ward": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+         
+          "status":{
+            "type":"string",
+            "example":"ACTIVE"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example":12
+          },
+          "polling_unit_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":12657
+          },
+          "election_id": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "election":{
+            "type":"array"
+          },
+          "version":"3",
+          "election_lgas":{
+            "type":"array"
+          },
+          "is_mapped":{
+            "type":"boolean"
+          },
+          "fullname":{
+            "type":"string"
+          },
+          "domain_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "domain_type":{
+            "type":"string"
+          },
+          "election_type_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "state_id": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "state": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "election_date":{
+            "type": "string",
+            "format": "timestamp"
+           
+          },
+          "domain":{
+            "type":"string"
+            
+          },
+          "election_type":{
+            "type": "string"
+            
+          },
+          "onModel":{
+            "type":"string"
+          },
+         
+          "created_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "updated_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "__v":{
+            "type":"integer",
+            "format":"int64"
+          }
+        }
+       },
+       "Election-polling": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+         
+          "status":{
+            "type":"string",
+            "example":"ACTIVE"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example":12
+          },
+          "polling_unit_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":12657
+          },
+          "election_id": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "election":{
+            "type":"array"
+          },
+          "version":{
+            "type": "integer",
+            "format": "int64",
+            "example":4
+          },
+          "election_lgas":{
+            "type":"array"
+          },
+          "is_mapped":{
+            "type":"boolean"
+          },
+          "fullname":{
+            "type":"string"
+          },
+          "domain_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "domain_type":{
+            "type":"string"
+          },
+          "election_type_id":{
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "state_id": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "state": {
+            "type": "integer",
+            "format": "int64",
+            "example":1
+          },
+          "election_date":{
+            "type": "string",
+            "format": "timestamp"
+           
+          },
+          "domain":{
+            "type":"string"
+            
+          },
+          "election_type":{
+            "type": "string"
+            
+          },
+          "onModel":{
+            "type":"string"
+          },
+         
+          "created_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "updated_at":{
+            "type":"string",
+            "format":"timestamp"
+          },
+          "__v":{
+            "type":"integer",
+            "format":"int64"
+          }
+        }
+       },
+       "Election-accreditation": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+         
+          "success":{
+            "type":"boolean",
+            "example":"true"
+          },
+          "data": {
+            "type": "string"
+            
+          }
+       
+        }
+       },
       "Pet": {
         "type": "array",
         "items": {

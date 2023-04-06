@@ -12,8 +12,10 @@ tags: [tutorial,APIs, React]
 In this tutorial we would learn how to use the election type API in a React application. 
 
 ## Prerequiste
+
 Good Knowledge of React
-Good Knowledge of API
+
+Basic Knowledge of API
 
 ### Time to Code.
 
